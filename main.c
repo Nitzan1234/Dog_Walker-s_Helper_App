@@ -1,4 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+void writeToFile(FILE *filename, int variable)
+{
+    const char *fileName = "C:\\Users\\nyznl\\Downloads\\משכורת.txt";
+    filename = fopen(fileName, "a");
+    if (filename == NULL) {
+        printf("Failed to open the file: %s\n", fileName);
+        return;
+    }
+
+    fprintf(filename, "%d\n", variable);
+
+    fclose(filename);
+}
 
 int main()
 {
@@ -45,11 +60,28 @@ int main()
     }
     else
     {
+        FILE *fp;
         printf("Money made today is: $%.2f\n",dailyPay);
+        writeToFile(fp, dailyPay);
         break;
     }
+    FILE *fp;
+    fp = fopen("C:\\Users\\nyznl\\Downloads\\משכורת.txt","r+");
+    if(fp == NULL)
+   {
+      printf("Error!");
+      exit(1);
+   }
+    int sum = 0;
+    char line[31];
+    while (fgets(line, sizeof(line), fp))
+    {
+        sum += atoi(line);  // Convert line to an integer and add to sum
     }
+
+    fclose(fp);
+
+    printf("Sum of all lines: %d\n", sum);
     return 0;
-    }    
-    
-    
+    }
+}
